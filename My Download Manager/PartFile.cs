@@ -42,8 +42,8 @@ namespace My_Download_Manager
             else return;
             Status = DownloadStatus.Downloading;
             System.Threading.ThreadStart ts = PerformStart;
-            System.Threading.Thread ThreadDownload = new System.Threading.Thread(ts);
-            ThreadDownload.Start();
+            System.Threading.Thread threadDownload = new System.Threading.Thread(ts);
+            threadDownload.Start();
         }
         private void PerformStart()
         {
