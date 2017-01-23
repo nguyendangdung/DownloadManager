@@ -19,7 +19,7 @@ namespace My_Download_Manager
        public static long TotalLoad = 0;
 
        public static string MessageBoxCaption = ".: My download manager :.";
-       public static string UserAgent = "My Download Manager";
+       public static string UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2";
        public static string Website = "http://www.tmvn.vn";
 
        private static Hashtable SimpleExtensionAutoDownload;

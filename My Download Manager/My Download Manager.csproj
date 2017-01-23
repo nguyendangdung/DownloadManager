@@ -266,39 +266,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\Debug\Icon\download.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
-    <None Include="bin\Debug\Icon\delete.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\Debug\Icon\audio_book.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\Icon\filewin.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\Icon\Sniffer.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\Icon\remove.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\Icon\Start.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\Icon\Stop.png" />
     <BaseApplicationManifest Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\Debug\Resource.dll" />
-    <None Include="bin\Debug\Icon\orther.gif" />
-    <None Include="bin\Debug\Icon\video.gif" />
-    <None Include="bin\Debug\Icon\application.gif" />
-    <None Include="bin\Debug\Icon\book.gif" />
-    <None Include="bin\Debug\Icon\category.gif" />
-    <None Include="bin\Debug\Icon\music.gif" />
     <Content Include="mdm.ico" />
   </ItemGroup>
   <ItemGroup>
