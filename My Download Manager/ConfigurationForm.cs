@@ -145,7 +145,7 @@ namespace My_Download_Manager
             SaveSnifferConfig();
             ObjStatic.Config.AutoStartSniffer = cboAutostartsniffer.Checked;
             ObjStatic.FormMain.SaveConfig();
-            this.Close();
+            Close();
         }
         private void btnDefault_Click(object sender, EventArgs e)
         {
@@ -153,7 +153,7 @@ namespace My_Download_Manager
         }
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
         private void btnDefaultAutoDownload_Click(object sender, EventArgs e)
         {

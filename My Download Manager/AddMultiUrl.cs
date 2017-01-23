@@ -37,7 +37,7 @@ namespace My_Download_Manager
         }
         public AddMultiUrl(string[] links)
         {
-            this.Links = links;
+            Links = links;
             InitializeComponent();
         }
         private void AddMultiUrl_Load(object sender, EventArgs e)
@@ -54,7 +54,7 @@ namespace My_Download_Manager
             else if(IsAutoOpen)
             {
                 MessageBox.Show("Links not found !",ObjStatic.MessageBoxCaption);
-                this.Close();
+                Close();
             }
         }
         private void AddUrls(string data)
@@ -219,7 +219,7 @@ namespace My_Download_Manager
                 }
                 ObjStatic.FormMain.Category[cboCategory.SelectedIndex].SaveTo = txtSaveto.Text;
                 ObjStatic.FormMain.SaveCategory();
-                this.Close();
+                Close();
             }
             else
             {
@@ -228,7 +228,7 @@ namespace My_Download_Manager
         }
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
         protected override void OnClosing(CancelEventArgs e)
         {

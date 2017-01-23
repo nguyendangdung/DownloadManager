@@ -27,18 +27,18 @@ namespace My_Download_Manager
         {
             InitializeComponent();
 
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            this.SetStyle(ControlStyles.DoubleBuffer, true);
-            this.SetStyle(ControlStyles.ResizeRedraw, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.DoubleBuffer, true);
+            SetStyle(ControlStyles.ResizeRedraw, true);
             //this.SetStyle(ControlStyles.Selectable, true);
-            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            this.SetStyle(ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.UserPaint, true);
 
             Value = 0;
             MaxValue = 100;
             ValueColor = Color.Blue;
             BackColor = Color.Black;
-            this.Font = new Font("tahoma", 10);
+            Font = new Font("tahoma", 10);
         }
 
         #endregion
@@ -62,8 +62,8 @@ namespace My_Download_Manager
         {
             int x = 0;
             int y =0; 
-            int w = this.Width;
-            int h = this.Height;
+            int w = Width;
+            int h = Height;
             if (w < 1 || h < 1)
                 return;
             Rectangle Rec = new Rectangle(x, y, w, h);
@@ -78,8 +78,8 @@ namespace My_Download_Manager
         {
             int x = 0;
             int y = 0;
-            int w = this.Width;
-            int h = this.Height;
+            int w = Width;
+            int h = Height;
             float width = (float)value * w / maxvalue;
             if (width == 0 || h == 0)
                 return;
@@ -114,8 +114,8 @@ namespace My_Download_Manager
             {
                 int x = 0;
                 int y = 0;
-                int w =this.Width ;
-                int h = this.Height;
+                int w =Width ;
+                int h = Height;
                 Color colorend = GetColor(valuecolor, true);
                 ColorBlend cbl = new ColorBlend(3);
                 cbl.Positions = new float[] { 0.0F, 0.5F, 1.0F };
@@ -160,11 +160,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.text;
+                return text;
             }
             set
             {
-                this.text = value;
+                text = value;
                 Invalidate();
             }
         }
@@ -172,7 +172,7 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.value;
+                return value;
             }
             set
             {
@@ -189,31 +189,31 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.maxvalue;
+                return maxvalue;
             }
             set
             {
-                if (this.maxvalue < this.value)
-                    this.maxvalue = this.value;
-                else this.maxvalue = value;
+                if (maxvalue < this.value)
+                    maxvalue = this.value;
+                else maxvalue = value;
             }
         }
         public Color ValueColor
         {
             get
             {
-                return this.valuecolor;
+                return valuecolor;
             }
             set
             {
-                this.valuecolor = value;
+                valuecolor = value;
             }
         }
         public List<PartFile> Parts
         {
             set
             {
-                this.parts = value;
+                parts = value;
                 Invalidate();
             }
         }

@@ -36,7 +36,7 @@ namespace My_Download_Manager
             if (txtEdit == null)
             {
                 txtEdit = new TextBox();
-                this.Controls.Add(txtEdit);
+                Controls.Add(txtEdit);
                 txtEdit.Left = lblFileName.Left;
                 txtEdit.Top = lblFileName.Top;
                 txtEdit.Width = lblFileName.Width;
@@ -56,7 +56,7 @@ namespace My_Download_Manager
                 if (txtEdit.Text.Trim().Length > 0)
                 {
                     lblFileName.Text = txtEdit.Text.Trim();
-                    FileSniffer fs = (FileSniffer)this.Tag;
+                    FileSniffer fs = (FileSniffer)Tag;
                     fs.FileName = txtEdit.Text.Trim();
                 }
             }
@@ -74,13 +74,13 @@ namespace My_Download_Manager
             if (IsFocus)
             {
                 int colorfocus = ColorNormal - 15;
-                this.BackColor = Color.FromArgb(colorfocus, colorfocus, colorfocus);
-                this.BorderStyle = BorderStyle.FixedSingle;
+                BackColor = Color.FromArgb(colorfocus, colorfocus, colorfocus);
+                BorderStyle = BorderStyle.FixedSingle;
             }
             else
             {
-                this.BackColor = Color.FromArgb(ColorNormal, ColorNormal, ColorNormal);
-                this.BorderStyle = BorderStyle.None;
+                BackColor = Color.FromArgb(ColorNormal, ColorNormal, ColorNormal);
+                BorderStyle = BorderStyle.None;
             }
         }
         private void ControlSniffFile_MouseHover(object sender, EventArgs e)

@@ -35,7 +35,7 @@ namespace My_Download_Manager
             num4 = HeaderParser.ToUInt(buffer, 0x80, 0x20);
             IPAddress source = IPAddress.Parse(IPv4Datagram.GetIPString(addr));
             IPAddress dest = IPAddress.Parse(IPv4Datagram.GetIPString(num4));
-            datagram = this.m_Data.GetIPv4Datagram(identification, source, dest);
+            datagram = m_Data.GetIPv4Datagram(identification, source, dest);
             if (datagram == null)
             {
                 datagram = new IPv4Datagram();
@@ -47,20 +47,20 @@ namespace My_Download_Manager
             datagram.AddFragment(fragment);
             if (!datagram.Complete)
             {
-                this.m_Data.AddIPv4Datagram(datagram);
+                m_Data.AddIPv4Datagram(datagram);
             }
             else
             {
                 switch (datagram.Protocol)
                 {
                     case 6:
-                        this.HandleTcpPacket(datagram.Data, datagram.Source, datagram.Destination);
+                        HandleTcpPacket(datagram.Data, datagram.Source, datagram.Destination);
                         break;
                     default: break;
                 }
                 if (datagram.WasFragmented())
                 {
-                    this.m_Data.RemoveIPv4Datagram(datagram);
+                    m_Data.RemoveIPv4Datagram(datagram);
                 }
             }        
         }
@@ -265,28 +265,28 @@ namespace My_Download_Manager
 
         public DataManager()
         {
-            this.m_IPv4Table = new Hashtable();
+            m_IPv4Table = new Hashtable();
         }
 
         public void AddIPv4Datagram(IPv4Datagram datagram)
         {
-            this.m_IPv4Table.Add(datagram.GetHashString(), datagram);
+            m_IPv4Table.Add(datagram.GetHashString(), datagram);
         }
 
         public IPv4Datagram GetIPv4Datagram(int identification, IPAddress source, IPAddress dest)
         {
             string format = "{0}:{1}:{2}";
             string key = string.Format(format, identification, source.Address.ToString(), dest.Address.ToString());
-            if (this.m_IPv4Table.Contains(key))
+            if (m_IPv4Table.Contains(key))
             {
-                return (IPv4Datagram)this.m_IPv4Table[key];
+                return (IPv4Datagram)m_IPv4Table[key];
             }
             return null;
         }
 
         public void RemoveIPv4Datagram(IPv4Datagram datagram)
         {
-            this.m_IPv4Table.Remove(datagram.GetHashString());
+            m_IPv4Table.Remove(datagram.GetHashString());
         }
     }
     public class IPv4Datagram
@@ -304,18 +304,18 @@ namespace My_Download_Manager
 
         public void AddFragment(IPv4Fragment fragment)
         {
-            if (this.m_FragmentHead == null)
+            if (m_FragmentHead == null)
             {
-                this.m_FragmentHead = fragment;
+                m_FragmentHead = fragment;
             }
-            else if (fragment.Offset < this.m_FragmentHead.Offset)
+            else if (fragment.Offset < m_FragmentHead.Offset)
             {
-                fragment.Next = this.m_FragmentHead;
-                this.m_FragmentHead = fragment;
+                fragment.Next = m_FragmentHead;
+                m_FragmentHead = fragment;
             }
             else
             {
-                IPv4Fragment fragmentHead = this.m_FragmentHead;
+                IPv4Fragment fragmentHead = m_FragmentHead;
                 IPv4Fragment next = fragmentHead.Next;
                 while ((fragmentHead != null) && (fragment.Offset > fragmentHead.Offset))
                 {
@@ -325,7 +325,7 @@ namespace My_Download_Manager
                 next.Next = fragment;
                 fragment.Next = fragmentHead;
             }
-            this.TestComplete();
+            TestComplete();
         }
 
         private void CombineData()
@@ -333,15 +333,15 @@ namespace My_Download_Manager
             IPv4Fragment fragment;
             int num = 0;
             int destinationIndex = 0;
-            for (fragment = this.m_FragmentHead; fragment != null; fragment = fragment.Next)
+            for (fragment = m_FragmentHead; fragment != null; fragment = fragment.Next)
             {
                 num += fragment.Length;
             }
-            this.m_Data = new byte[num];
-            this.m_Length = num;
-            for (fragment = this.m_FragmentHead; fragment != null; fragment = fragment.Next)
+            m_Data = new byte[num];
+            m_Length = num;
+            for (fragment = m_FragmentHead; fragment != null; fragment = fragment.Next)
             {
-                Array.Copy(fragment.Data, 0, this.m_Data, destinationIndex, fragment.Length);
+                Array.Copy(fragment.Data, 0, m_Data, destinationIndex, fragment.Length);
                 destinationIndex += fragment.Length;
             }
         }
@@ -349,7 +349,7 @@ namespace My_Download_Manager
         public string GetHashString()
         {
             string format = "IPv4:{0}:{1}";
-            return string.Format(format, this.SourceIP, this.DestinationIP);
+            return string.Format(format, SourceIP, DestinationIP);
         }
 
         public static string GetIPString(uint addr)
@@ -364,129 +364,129 @@ namespace My_Download_Manager
 
         public string GetUpperProtocol()
         {
-            return this.m_UpperProtocol;
+            return m_UpperProtocol;
         }
 
         private void SetUpperProtocol(int protocol)
         {
-            this.m_Protocol = protocol;
-            switch (this.Protocol)
+            m_Protocol = protocol;
+            switch (Protocol)
             {
                 case 1:
-                    this.m_UpperProtocol = "ICMP";
+                    m_UpperProtocol = "ICMP";
                     return;
 
                 case 3:
-                    this.m_UpperProtocol = "GW To GW";
+                    m_UpperProtocol = "GW To GW";
                     return;
 
                 case 4:
-                    this.m_UpperProtocol = "CMCC";
+                    m_UpperProtocol = "CMCC";
                     return;
 
                 case 5:
-                    this.m_UpperProtocol = "ST";
+                    m_UpperProtocol = "ST";
                     return;
 
                 case 6:
-                    this.m_UpperProtocol = "Tcp";
+                    m_UpperProtocol = "Tcp";
                     return;
 
                 case 7:
-                    this.m_UpperProtocol = "Ucl";
+                    m_UpperProtocol = "Ucl";
                     return;
 
                 case 8:
-                    this.m_UpperProtocol = "7";
+                    m_UpperProtocol = "7";
                     return;
 
                 case 9:
-                    this.m_UpperProtocol = "Secure";
+                    m_UpperProtocol = "Secure";
                     return;
 
                 case 10:
-                    this.m_UpperProtocol = "BBN";
+                    m_UpperProtocol = "BBN";
                     return;
 
                 case 11:
-                    this.m_UpperProtocol = "NVP";
+                    m_UpperProtocol = "NVP";
                     return;
 
                 case 12:
-                    this.m_UpperProtocol = "PUP";
+                    m_UpperProtocol = "PUP";
                     return;
 
                 case 13:
-                    this.m_UpperProtocol = "Pluribus";
+                    m_UpperProtocol = "Pluribus";
                     return;
 
                 case 14:
-                    this.m_UpperProtocol = "Telenet";
+                    m_UpperProtocol = "Telenet";
                     return;
 
                 case 15:
-                    this.m_UpperProtocol = "XNET";
+                    m_UpperProtocol = "XNET";
                     return;
 
                 case 0x10:
-                    this.m_UpperProtocol = "Chaos";
+                    m_UpperProtocol = "Chaos";
                     return;
 
                 case 0x11:
-                    this.m_UpperProtocol = "Udp";
+                    m_UpperProtocol = "Udp";
                     return;
 
                 case 0x12:
-                    this.m_UpperProtocol = "Multiplexing";
+                    m_UpperProtocol = "Multiplexing";
                     return;
 
                 case 0x13:
-                    this.m_UpperProtocol = "DCN";
+                    m_UpperProtocol = "DCN";
                     return;
 
                 case 20:
-                    this.m_UpperProtocol = "TAC Monitoring";
+                    m_UpperProtocol = "TAC Monitoring";
                     return;
 
                 case 0x3f:
-                    this.m_UpperProtocol = "Any local network";
+                    m_UpperProtocol = "Any local network";
                     return;
 
                 case 0x40:
-                    this.m_UpperProtocol = "SATNET";
+                    m_UpperProtocol = "SATNET";
                     return;
 
                 case 0x41:
-                    this.m_UpperProtocol = "MIT Subnet Support";
+                    m_UpperProtocol = "MIT Subnet Support";
                     return;
 
                 case 0x45:
-                    this.m_UpperProtocol = "SATNET Monitoring";
+                    m_UpperProtocol = "SATNET Monitoring";
                     return;
 
                 case 0x47:
-                    this.m_UpperProtocol = "Internet packet core utility";
+                    m_UpperProtocol = "Internet packet core utility";
                     return;
 
                 case 0x4c:
-                    this.m_UpperProtocol = "Backroom SATNET";
+                    m_UpperProtocol = "Backroom SATNET";
                     return;
 
                 case 0x4e:
-                    this.m_UpperProtocol = "WIDEBAND Monitoring";
+                    m_UpperProtocol = "WIDEBAND Monitoring";
                     return;
 
                 case 0x4f:
-                    this.m_UpperProtocol = "WIDEBAND EXPAK";
+                    m_UpperProtocol = "WIDEBAND EXPAK";
                     return;
             }
-            this.m_UpperProtocol = this.Protocol.ToString();
+            m_UpperProtocol = Protocol.ToString();
         }
 
         private void TestComplete()
         {
             bool flag = false;
-            IPv4Fragment fragmentHead = this.m_FragmentHead;
+            IPv4Fragment fragmentHead = m_FragmentHead;
             int num = 0;
             while (fragmentHead != null)
             {
@@ -514,21 +514,21 @@ namespace My_Download_Manager
             }
             if (flag)
             {
-                this.CombineData();
+                CombineData();
             }
-            this.m_Complete = flag;
+            m_Complete = flag;
         }
 
         public bool WasFragmented()
         {
-            return (this.FragmentList.Next != null);
+            return (FragmentList.Next != null);
         }
 
         public bool Complete
         {
             get
             {
-                return this.m_Complete;
+                return m_Complete;
             }
         }
 
@@ -536,7 +536,7 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Data;
+                return m_Data;
             }
         }
 
@@ -544,11 +544,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Destination;
+                return m_Destination;
             }
             set
             {
-                this.m_Destination = value;
+                m_Destination = value;
             }
         }
 
@@ -556,7 +556,7 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.Destination.ToString();
+                return Destination.ToString();
             }
         }
 
@@ -564,7 +564,7 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_FragmentHead;
+                return m_FragmentHead;
             }
         }
 
@@ -572,11 +572,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Identification;
+                return m_Identification;
             }
             set
             {
-                this.m_Identification = value;
+                m_Identification = value;
             }
         }
 
@@ -584,11 +584,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Length;
+                return m_Length;
             }
             set
             {
-                this.m_Length = value;
+                m_Length = value;
             }
         }
 
@@ -596,11 +596,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Protocol;
+                return m_Protocol;
             }
             set
             {
-                this.SetUpperProtocol(value);
+                SetUpperProtocol(value);
             }
         }
 
@@ -608,11 +608,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Source;
+                return m_Source;
             }
             set
             {
-                this.m_Source = value;
+                m_Source = value;
             }
         }
 
@@ -620,7 +620,7 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.Source.ToString();
+                return Source.ToString();
             }
         }
 
@@ -628,11 +628,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_TypeOfService;
+                return m_TypeOfService;
             }
             set
             {
-                this.m_TypeOfService = value;
+                m_TypeOfService = value;
             }
         }
     }
@@ -647,16 +647,16 @@ namespace My_Download_Manager
 
         public void SetData(byte[] Data, int offset, int length)
         {
-            this.m_Data = new byte[length];
-            this.m_Length = length;
-            Array.Copy(Data, offset, this.m_Data, 0, length);
+            m_Data = new byte[length];
+            m_Length = length;
+            Array.Copy(Data, offset, m_Data, 0, length);
         }
 
         public byte[] Data
         {
             get
             {
-                return this.m_Data;
+                return m_Data;
             }
         }
 
@@ -664,11 +664,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Length;
+                return m_Length;
             }
             set
             {
-                this.m_Length = value;
+                m_Length = value;
             }
         }
 
@@ -676,11 +676,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_MoreFlag;
+                return m_MoreFlag;
             }
             set
             {
-                this.m_MoreFlag = value;
+                m_MoreFlag = value;
             }
         }
 
@@ -688,11 +688,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Next;
+                return m_Next;
             }
             set
             {
-                this.m_Next = value;
+                m_Next = value;
             }
         }
 
@@ -700,11 +700,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Offset;
+                return m_Offset;
             }
             set
             {
-                this.m_Offset = value;
+                m_Offset = value;
             }
         }
 
@@ -712,11 +712,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_TTL;
+                return m_TTL;
             }
             set
             {
-                this.m_TTL = value;
+                m_TTL = value;
             }
         }
     }
@@ -771,24 +771,24 @@ namespace My_Download_Manager
         public string GetHashString()
         {
             string format = "Tcp:{0}:{1}:{2}:{3}";
-            return string.Format(format, new object[] { this.SourceIP, this.SourcePort, this.DestinationIP, this.DestinationPort });
+            return string.Format(format, new object[] { SourceIP, SourcePort, DestinationIP, DestinationPort });
         }
 
         public void SetData(byte[] data, int offset, int length)
         {
-            this.m_Data = new byte[length];
-            Array.Copy(data, offset, this.m_Data, 0, length);
+            m_Data = new byte[length];
+            Array.Copy(data, offset, m_Data, 0, length);
         }
 
         public bool Ack
         {
             get
             {
-                return this.m_Ack;
+                return m_Ack;
             }
             set
             {
-                this.m_Ack = value;
+                m_Ack = value;
             }
         }
 
@@ -796,11 +796,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Acknowledgement;
+                return m_Acknowledgement;
             }
             set
             {
-                this.m_Acknowledgement = value;
+                m_Acknowledgement = value;
             }
         }
 
@@ -808,11 +808,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Data;
+                return m_Data;
             }
             set
             {
-                this.m_Data = value;
+                m_Data = value;
             }
         }
 
@@ -820,11 +820,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_DataOffset;
+                return m_DataOffset;
             }
             set
             {
-                this.m_DataOffset = value;
+                m_DataOffset = value;
             }
         }
 
@@ -832,11 +832,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Destination;
+                return m_Destination;
             }
             set
             {
-                this.m_Destination = value;
+                m_Destination = value;
             }
         }
 
@@ -844,7 +844,7 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.Destination.Address.ToString();
+                return Destination.Address.ToString();
             }
         }
 
@@ -852,7 +852,7 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Destination.Port;
+                return m_Destination.Port;
             }
         }
 
@@ -860,11 +860,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Fin;
+                return m_Fin;
             }
             set
             {
-                this.m_Fin = value;
+                m_Fin = value;
             }
         }
 
@@ -872,11 +872,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Length;
+                return m_Length;
             }
             set
             {
-                this.m_Length = value;
+                m_Length = value;
             }
         }
 
@@ -884,11 +884,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Push;
+                return m_Push;
             }
             set
             {
-                this.m_Push = value;
+                m_Push = value;
             }
         }
 
@@ -896,11 +896,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Reset;
+                return m_Reset;
             }
             set
             {
-                this.m_Reset = value;
+                m_Reset = value;
             }
         }
 
@@ -908,11 +908,11 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Sequence;
+                return m_Sequence;
             }
             set
             {
-                this.m_Sequence = value;
+                m_Sequence = value;
             }
         }
 
@@ -920,47 +920,47 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.m_Source;
+                return m_Source;
             }
             set
             {
-                this.m_Source = value;
+                m_Source = value;
             }
         }
         public string SourceIP
         {
             get
             {
-                return this.Source.Address.ToString();
+                return Source.Address.ToString();
             }
         }
         public int SourcePort
         {
             get
             {
-                return this.m_Source.Port;
+                return m_Source.Port;
             }
         }
         public bool Syn
         {
             get
             {
-                return this.m_Syn;
+                return m_Syn;
             }
             set
             {
-                this.m_Syn = value;
+                m_Syn = value;
             }
         }
         public bool Urgent
         {
             get
             {
-                return this.m_Urgent;
+                return m_Urgent;
             }
             set
             {
-                this.m_Urgent = value;
+                m_Urgent = value;
             }
         }
     }

@@ -51,13 +51,13 @@ namespace My_Download_Manager
             System.Net.HttpWebResponse response;
             System.IO.FileStream fs = null;
             System.IO.Stream stream;
-            if (System.IO.File.Exists(this.PathFile))
+            if (System.IO.File.Exists(PathFile))
             {
-                System.IO.FileInfo ftemp = new System.IO.FileInfo(this.PathFile);
+                System.IO.FileInfo ftemp = new System.IO.FileInfo(PathFile);
                 Loaded = ftemp.Length;
                 if (Loaded >= Size && Size > 0)
                 {
-                    this.Status = DownloadStatus.Complete;
+                    Status = DownloadStatus.Complete;
                     Running = false;
                     if (PartDownloadComplete != null)
                         PartDownloadComplete(this);
@@ -67,7 +67,7 @@ namespace My_Download_Manager
             else
             {
                 Loaded = 0;
-                string directory = System.IO.Path.GetDirectoryName(this.PathFile);
+                string directory = System.IO.Path.GetDirectoryName(PathFile);
                 if (!System.IO.Directory.Exists(directory))
                     System.IO.Directory.CreateDirectory(directory);
             }
@@ -77,7 +77,7 @@ namespace My_Download_Manager
             if (ObjStatic.Cookies[parent.Host] != null)
                 request.Headers[System.Net.HttpRequestHeader.Cookie] = ObjStatic.Cookies[parent.Host].ToString();
             request.AllowAutoRedirect = true;
-            request.ConnectionGroupName = this.PathFile;
+            request.ConnectionGroupName = PathFile;
             request.KeepAlive = true;
             long requestlength = 0;
             if (Size > 0)
@@ -97,7 +97,7 @@ namespace My_Download_Manager
                     return;
                 }
                 requestlength = Convert.ToInt64(response.Headers[System.Net.HttpResponseHeader.ContentLength]);
-                if (this.parent.Resume == ResumeAble.Yes)
+                if (parent.Resume == ResumeAble.Yes)
                 {
                     if (requestlength != (Size - Loaded))
                     {
@@ -118,7 +118,7 @@ namespace My_Download_Manager
                     }
                     try
                     {
-                        fs = new System.IO.FileStream(this.PathFile, System.IO.FileMode.Append, System.IO.FileAccess.Write, System.IO.FileShare.Write);
+                        fs = new System.IO.FileStream(PathFile, System.IO.FileMode.Append, System.IO.FileAccess.Write, System.IO.FileShare.Write);
                     }
                     catch (Exception ex)
                     {
@@ -134,11 +134,11 @@ namespace My_Download_Manager
                 {
                     if (requestlength == (Size - Loaded))
                     {
-                        this.parent.Resume = ResumeAble.Yes;
-                        this.parent.PerformStart();
+                        parent.Resume = ResumeAble.Yes;
+                        parent.PerformStart();
                         try
                         {
-                            fs = new System.IO.FileStream(this.PathFile, System.IO.FileMode.Append, System.IO.FileAccess.Write, System.IO.FileShare.Write);
+                            fs = new System.IO.FileStream(PathFile, System.IO.FileMode.Append, System.IO.FileAccess.Write, System.IO.FileShare.Write);
                         }
                         catch (Exception ex)
                         {
@@ -153,13 +153,13 @@ namespace My_Download_Manager
                     }
                     else// if (requestlength == parent.Size)
                     {
-                        this.parent.Resume = ResumeAble.No;
+                        parent.Resume = ResumeAble.No;
                         from = 0;
                         Size = parent.Size;
                         Loaded = 0;
                         try
                         {
-                            fs = new System.IO.FileStream(this.PathFile, System.IO.FileMode.Create, System.IO.FileAccess.Write, System.IO.FileShare.Write);
+                            fs = new System.IO.FileStream(PathFile, System.IO.FileMode.Create, System.IO.FileAccess.Write, System.IO.FileShare.Write);
                         }
                         catch (Exception ex)
                         {
@@ -192,10 +192,10 @@ namespace My_Download_Manager
                         PartDownloadComplete(this);
                     return;
                 }
-                this.parent.Resume = ResumeAble.No;
+                parent.Resume = ResumeAble.No;
                 try
                 {
-                    fs = new System.IO.FileStream(this.PathFile, System.IO.FileMode.Create);
+                    fs = new System.IO.FileStream(PathFile, System.IO.FileMode.Create);
                 }
                 catch (Exception ex)
                 {
@@ -224,7 +224,7 @@ namespace My_Download_Manager
                 }
                 catch (Exception ex)
                 {
-                    this.Running = false;
+                    Running = false;
                     TotalError++;
                     break;
                 }
@@ -237,7 +237,7 @@ namespace My_Download_Manager
                     }
                     catch (Exception ex)
                     {
-                        this.Running = false;
+                        Running = false;
                         TotalError++;
                         break;
                     }
@@ -256,7 +256,7 @@ namespace My_Download_Manager
                 if (getbyte <= 0)
                 {
                     TotalError++;
-                    this.Running = false;
+                    Running = false;
                     break;
                 }
             }
@@ -264,7 +264,7 @@ namespace My_Download_Manager
             response.Close();
             fs.Close();
             fs.Dispose();
-            if (parent.Running && this.Running && !CanSplit)
+            if (parent.Running && Running && !CanSplit)
                 Status = DownloadStatus.Complete;
             else Status = DownloadStatus.Error;
             Running = false;
@@ -291,7 +291,7 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.from;
+                return from;
             }
         }
         public int FileSize
@@ -299,11 +299,11 @@ namespace My_Download_Manager
             get
             {
                 int result = 0;
-                if (System.IO.File.Exists(this.PathFile))
+                if (System.IO.File.Exists(PathFile))
                 {
                     try
                     {
-                        System.IO.FileInfo fi = new System.IO.FileInfo(this.PathFile);
+                        System.IO.FileInfo fi = new System.IO.FileInfo(PathFile);
                         result = (int)fi.Length;
                     }
                     catch (Exception ex)

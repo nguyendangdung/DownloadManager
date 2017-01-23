@@ -52,10 +52,10 @@ namespace My_Download_Manager
         }
         private void ShowFileSniffer_Load(object sender, EventArgs e)
         {
-            MinHeight = this.Height;
+            MinHeight = Height;
             Rectangle rec = Screen.PrimaryScreen.WorkingArea;
-            this.Left = rec.Width - this.Width;
-            this.Top = rec.Height - this.Height;
+            Left = rec.Width - Width;
+            Top = rec.Height - Height;
             WorkingHeight = rec.Height;
             lstcontrol = new List<ControlSniffFile>();
             TimerShowFile = new Timer();
@@ -67,8 +67,8 @@ namespace My_Download_Manager
         {
             if (temp % timeoff == 0)
             {
-                int top = this.Top - deltay;
-                int height = this.Height + deltay;
+                int top = Top - deltay;
+                int height = Height + deltay;
                 if (deltay > 0)
                 {
                     if (height > maxheight)
@@ -93,14 +93,14 @@ namespace My_Download_Manager
                         ClearControl();
                         lstcontrol.Clear();
                         temp = 1;
-                        this.Visible = false;
+                        Visible = false;
                     }
                 }
                 SetTopHeightFrom(top, height);
             }
             else
             {
-                if (!this.Bounds.Contains(Cursor.Position))
+                if (!Bounds.Contains(Cursor.Position))
                     temp++;
                 else
                 {
@@ -111,42 +111,42 @@ namespace My_Download_Manager
         }
         private void SetTopHeightFrom(int top, int height)
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
                 SetTopHeightFromCallback obj = new SetTopHeightFromCallback(SetTopHeightFrom);
-                this.Invoke(obj, top, height);
+                Invoke(obj, top, height);
             }
             else
             {
-                this.Top = top;
-                this.Height = height;
+                Top = top;
+                Height = height;
             }
         }
         private void SetFormVisible()
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
                 SetFormVisibleCalback obj = new SetFormVisibleCalback(SetFormVisible);
-                this.Invoke(obj);
+                Invoke(obj);
             }
             else
             {
-                if (!this.Visible)
-                    this.Visible = true;
+                if (!Visible)
+                    Visible = true;
             }
         }
         private void AddControlToForm(ControlSniffFile csf, bool IsAdd)
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
                 AddControlToFormCallback obj = new AddControlToFormCallback(AddControlToForm);
-                this.Invoke(obj, csf, IsAdd);
+                Invoke(obj, csf, IsAdd);
             }
             else
             {
                 if (IsAdd)
-                    this.Controls.Add(csf);
-                else this.Controls.Remove(csf);
+                    Controls.Add(csf);
+                else Controls.Remove(csf);
             }
         }
         public void AddFile(FileSniffer file)
@@ -236,15 +236,15 @@ namespace My_Download_Manager
         }
         private void ClearControl()
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
                 ClearControlCallback obj = new ClearControlCallback(ClearControl);
-                this.Invoke(obj);
+                Invoke(obj);
             }
             else
             {
                 for (int i = 0; i < lstcontrol.Count; i++)
-                    this.Controls.Remove(lstcontrol[i]);
+                    Controls.Remove(lstcontrol[i]);
             }
         }
         public void RemoveFile(ControlSniffFile csf)
@@ -259,7 +259,7 @@ namespace My_Download_Manager
                 SetPositionControlSniffFile(lstcontrol[i], start);
                 start += csf.Height + W_Y;
             }
-            SetTopHeightFrom(this.Top + csf.Height, this.Height - csf.Height);
+            SetTopHeightFrom(Top + csf.Height, Height - csf.Height);
             if (lstcontrol.Count == 0)
                 temp = 0;
         }

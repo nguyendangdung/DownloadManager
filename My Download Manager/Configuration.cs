@@ -52,16 +52,16 @@ namespace My_Download_Manager
         
         public Configuration()
         {
-            this.buffer = 4096;
-            this.connection = 16;
-            this.extensiontempfile = ".part";
-            this.fileconnection = 2;
+            buffer = 4096;
+            connection = 16;
+            extensiontempfile = ".part";
+            fileconnection = 2;
             RegisterWithIE = true;
             LastPathSaveFile = new Hashtable();
             Installed = false;
-            this.ExtensionNoSniff = DefaultNoSniff;
-            this.ExtensionAutoDownload = DefaultAutoDownload;
-            this.RunOnStartup = true;
+            ExtensionNoSniff = DefaultNoSniff;
+            ExtensionAutoDownload = DefaultAutoDownload;
+            RunOnStartup = true;
         }
         public string GetPathSaveFileFromExtension(string extension)
         {
@@ -77,7 +77,7 @@ namespace My_Download_Manager
         {
             string extension = System.IO.Path.GetExtension(path).ToLower();
             if (ObjStatic.Config.LastPathSaveFile == null)
-                ObjStatic.Config.LastPathSaveFile = new System.Collections.Hashtable();
+                ObjStatic.Config.LastPathSaveFile = new Hashtable();
             ObjStatic.Config.LastPathSaveFile[extension] = System.IO.Path.GetDirectoryName(path);
             ObjStatic.FormMain.SaveConfig();
         }
@@ -89,73 +89,73 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.currentcategory;
+                return currentcategory;
             }
             set
             {
-                this.currentcategory = value;
+                currentcategory = value;
             }
         }
         public int FileConnection
         {
             get
             {
-                return this.fileconnection;
+                return fileconnection;
             }
             set
             {
-                this.fileconnection = value;
+                fileconnection = value;
             }
         }
         public int Buffer
         {
             get
             {
-                return this.buffer;
+                return buffer;
             }
             set
             {
-                this.buffer = value;
+                buffer = value;
             }
         }
         public int Connection
         {
             get
             {
-                return this.connection;
+                return connection;
             }
             set
             {
-                this.connection = value;
+                connection = value;
             }
         }
         public string FolderTemp
         {
             get
             {
-                return this.foldertemp;
+                return foldertemp;
             }
             set
             {
-                this.foldertemp = value;
+                foldertemp = value;
             }
         }
         public string ExtensionTempFile
         {
             get
             {
-                return this.extensiontempfile;
+                return extensiontempfile;
             }
         }
         public bool AutoDownloadWhenHasLink
         {
             get
             {
-                return this.autodownloadwhenhaslink;
+                return autodownloadwhenhaslink;
             }
             set
             {
-                this.autodownloadwhenhaslink = value;
+                autodownloadwhenhaslink = value;
             }
         }
 
@@ -170,9 +170,9 @@ namespace My_Download_Manager
         public string PathSave;
         public TypeSniffer(string type, string description, bool selected)
         {
-            this.Type = type;
-            this.Description = description;
-            this.Selected = selected;
+            Type = type;
+            Description = description;
+            Selected = selected;
         }
     }
 }

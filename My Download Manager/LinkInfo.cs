@@ -21,7 +21,7 @@ namespace My_Download_Manager
         public LinkInfo(string Link)
         {
             size = -1;
-            this.link = Link;
+            link = Link;
             try
             {
                 Uri uri = new Uri(Link);
@@ -64,40 +64,40 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.size;
+                return size;
             }
             set
             {
-                this.size = value;
+                size = value;
             }
         }
         public string FileName
         {
             get
             {
-                return this.filename;
+                return filename;
             }
             set
             {
-                this.filename = value;
+                filename = value;
             }
         }
         public bool FileExist
         {
             get
             {
-                return this.fileexist;
+                return fileexist;
             }
             set
             {
-                this.fileexist = value;
+                fileexist = value;
             }
         }
         public string Link
         {
             get
             {
-                return this.link;
+                return link;
             }
         }
 

@@ -20,7 +20,7 @@ namespace My_Download_Manager
             graphics.FillRectangle(brush, cellBounds.X, cellBounds.Y, WidthIcon+1, cellBounds.Height);
             if (cellicon != null)
             {
-                graphics.DrawIcon(this.cellicon, new System.Drawing.Rectangle(cellBounds.X+2, cellBounds.Y+1, WidthIcon-1, cellBounds.Height-2));
+                graphics.DrawIcon(cellicon, new System.Drawing.Rectangle(cellBounds.X+2, cellBounds.Y+1, WidthIcon-1, cellBounds.Height-2));
             }
             cellBounds.X += WidthIcon;
             cellBounds.Width -= WidthIcon;
@@ -49,7 +49,7 @@ namespace My_Download_Manager
     {
         public CustomGridColumn()
         {
-            this.CellTemplate = new CustomGridCell();
+            CellTemplate = new CustomGridCell();
         }
     }
 

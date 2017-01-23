@@ -37,7 +37,7 @@ namespace My_Download_Manager
         }
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
         private void btnOK_Click(object sender, EventArgs e)
         {
@@ -68,7 +68,7 @@ namespace My_Download_Manager
                             ObjStatic.FormMain.AddFileToCurrentCategory(f);
                         }
                         MessageBox.Show("Import complete !",ObjStatic.MessageBoxCaption);
-                        this.Close();
+                        Close();
                     }
                 }
             }

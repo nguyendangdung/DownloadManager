@@ -116,15 +116,15 @@ namespace My_Download_Manager
        }
        public static void ShowFormSniff()
        {
-           if (ObjStatic.FormSniffer == null || ObjStatic.FormSniffer.IsDisposed)
+           if (FormSniffer == null || FormSniffer.IsDisposed)
            {
-               ObjStatic.FormSniffer = new Sniffer();
-               ObjStatic.FormSniffer.Show();
+               FormSniffer = new Sniffer();
+               FormSniffer.Show();
            }
            else
            {
-               ObjStatic.FormSniffer.Show();
-               ObjStatic.FormSniffer.Activate();
+               FormSniffer.Show();
+               FormSniffer.Activate();
            }
        }
 
@@ -134,7 +134,7 @@ namespace My_Download_Manager
            {
                SimpleExtensionAutoDownload = new Hashtable();
                ComplexExtensionAutoDownload = new List<string>();
-               string[] str = ObjStatic.Config.ExtensionAutoDownload.ToLower().Split(' ');
+               string[] str = Config.ExtensionAutoDownload.ToLower().Split(' ');
                for (int i = 0; i < str.Length; i++)
                {
                    if (str[i].IndexOf('*') >= 0)

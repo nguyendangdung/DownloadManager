@@ -41,7 +41,7 @@ namespace My_Download_Manager
         private void btnCancel_Click(object sender, EventArgs e)
         {
             TimerCountShutdown.Stop();
-            this.Close();
+            Close();
         }
         private void TimerCountShutdown_Tick(object sender, EventArgs e)
         {

@@ -80,7 +80,7 @@ namespace My_Download_Manager
                     }
                 }
                 ObjStatic.FormMain.SaveCategory();
-                this.Close();
+                Close();
             }
             else
             {
@@ -89,12 +89,12 @@ namespace My_Download_Manager
                 lfnew.ExitWindownWhenComplete = CboShutdownWhencomplete.Checked;
                 ObjStatic.FormMain.AddCategory(lfnew);
                 ObjStatic.FormMain.SaveCategory();
-                this.Close();
+                Close();
             }
         }
         private void btnOK_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
         private void btnBrowser_Click(object sender, EventArgs e)
         {

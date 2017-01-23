@@ -27,11 +27,11 @@ namespace My_Download_Manager
         {
             ListFile lf = (ListFile)CboCategory.SelectedItem;
             ObjStatic.FormMain.MoveFileSelectToOrtherCategory(lf);
-            this.Close();
+            Close();
         }
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

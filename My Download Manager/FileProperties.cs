@@ -32,26 +32,26 @@ namespace My_Download_Manager
         {
             if (show)
             {
-                this.Height += panel1.Height;
+                Height += panel1.Height;
             }
-            else this.Height -= panel1.Height;
+            else Height -= panel1.Height;
             panel1.Visible = show;
         }
         private void FileProperties_Load(object sender, EventArgs e)
         {
             ShowDetail(false);
-            lblFileName.Text = System.IO.Path.GetFileName(this.file.PathFile);
-            lblFileSize.Text = ObjStatic.ToStringSize(this.file.Size);
-            if (this.file.IsMediafireLink)
-                lblMediafireLink.Text = this.file.LinkMediaFire;
-            lblResumeAble.Text = this.file.Resume.ToString();
-            if (this.file.Resume == ResumeAble.No)
+            lblFileName.Text = System.IO.Path.GetFileName(file.PathFile);
+            lblFileSize.Text = ObjStatic.ToStringSize(file.Size);
+            if (file.IsMediafireLink)
+                lblMediafireLink.Text = file.LinkMediaFire;
+            lblResumeAble.Text = file.Resume.ToString();
+            if (file.Resume == ResumeAble.No)
             {
                 lblResumeAble.ForeColor = Color.Red;
             }
-            txtLink.Text = this.file.Link;
-            txtSaveto.Text = this.file.PathFile;
-            if (!this.file.Running && this.file.Status != DownloadStatus.Complete)
+            txtLink.Text = file.Link;
+            txtSaveto.Text = file.PathFile;
+            if (!file.Running && file.Status != DownloadStatus.Complete)
             {
                 btnBrowser.Enabled = true;
                 txtSaveto.ReadOnly = false;
@@ -133,7 +133,7 @@ namespace My_Download_Manager
         }
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
         private void PerformClose()
         {
@@ -152,11 +152,11 @@ namespace My_Download_Manager
         }
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if (txtSaveto.Text != this.file.PathFile)
+            if (txtSaveto.Text != file.PathFile)
             {
-                this.file.PathFile = txtSaveto.Text;
+                file.PathFile = txtSaveto.Text;
             }
-            this.Close();
+            Close();
         }
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -165,7 +165,7 @@ namespace My_Download_Manager
         }
         private void ShowStatus()
         {
-            while (file.Running && !this.Disposing)
+            while (file.Running && !Disposing)
             {
                 SetProcessBarValue(file.Loaded, true);
                 if (panel1.Visible)

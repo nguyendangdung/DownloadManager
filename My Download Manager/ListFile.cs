@@ -25,7 +25,7 @@ namespace My_Download_Manager
         public ListFile(string name, int fileconnection)
         {
             this.name = name;
-            this.running = false;
+            running = false;
             this.fileconnection = fileconnection;
             files = new List<FileDownload>();
         }
@@ -38,7 +38,7 @@ namespace My_Download_Manager
         {
             if (!Running)
             {
-                this.running = true;
+                running = true;
                 for (int i = 0; i < files.Count; i++)
                 {
                     files[i].Running = false;
@@ -81,7 +81,7 @@ namespace My_Download_Manager
                         }
                         continue;
                     }
-                    if (i < files.Count && !files[i].Running && count < this.fileconnection && !files[i].IsCancelDownload && files[i].Status != DownloadStatus.Complete && files[i].Status != DownloadStatus.Building)
+                    if (i < files.Count && !files[i].Running && count < fileconnection && !files[i].IsCancelDownload && files[i].Status != DownloadStatus.Complete && files[i].Status != DownloadStatus.Building)
                     {
                         if (list[files[i]] == null)
                         {
@@ -135,7 +135,7 @@ namespace My_Download_Manager
         }
         public void StopDownload()
         {
-            this.running = false;
+            running = false;
             for (int i = 0; i < files.Count; i++)
             {
                 files[i].Running = false;
@@ -149,27 +149,27 @@ namespace My_Download_Manager
 
         public void AddFile(FileDownload f)
         {
-            this.files.Add(f);
+            files.Add(f);
             f.Parent = this;
         }
         public void InsertFile(int index,FileDownload f)
         {
-            this.files.Insert(index, f);
+            files.Insert(index, f);
             f.Parent = this;
         }
         public void RemoveAt(int index)
         {
-            this.files.RemoveAt(index);
+            files.RemoveAt(index);
         }
         public void RemoveFileAt(int index)
         {
             files[index].Dispose();
-            this.files.RemoveAt(index);
+            files.RemoveAt(index);
         }
         public void RemoveFile(FileDownload f)
         {
             f.Dispose();
-            this.files.Remove(f);
+            files.Remove(f);
         }
         public void Clear()
         {
@@ -188,19 +188,19 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.files.Count;
+                return files.Count;
             }
         }
         public int FileConnection
         {
             get
             {
-                return this.fileconnection;
+                return fileconnection;
             }
             set
             {
                 if (value > 0)
-                    this.fileconnection = value;
+                    fileconnection = value;
             }
         }
         public FileDownload this[int index]
@@ -218,22 +218,22 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.name;
+                return name;
             }
             set
             {
-                this.name = value;
+                name = value;
             }
         }
         public string SaveTo
         {
             get
             {
-                return this.saveto;
+                return saveto;
             }
             set
             {
-                this.saveto = value;
+                saveto = value;
             }
 
         }
@@ -241,22 +241,22 @@ namespace My_Download_Manager
         {
             get
             {
-                return this.running;
+                return running;
             }
             set
             {
-                this.running = value;
+                running = value;
             }
         }
         public bool ExitWindownWhenComplete
         {
             get
             {
-                return this.exitwindownwhencomplete;
+                return exitwindownwhencomplete;
             }
             set
             {
-                this.exitwindownwhencomplete = value;
+                exitwindownwhencomplete = value;
             }
         }
         #endregion
