@@ -20,7 +20,10 @@ namespace DL
 
         public File()
         {
-            _client = new HttpClient();
+            _client = new HttpClient()
+            {
+                Timeout = System.Threading.Timeout.InfiniteTimeSpan
+            };
             Name = "Test.exe";
         }
 
@@ -93,7 +96,7 @@ namespace DL
 
         public async Task DownloadAsync()
         {
-            var start = DateTime.Now;
+            //var start = DateTime.Now;
             var tasks = new List<Task>();
             foreach (var part in Parts)
             {
@@ -114,9 +117,9 @@ namespace DL
                     System.IO.File.Delete(part.LocalPath);
                 }
             }
-            var end = DateTime.Now;
-            var time = end - start;
-            MessageBox.Show("Download complete, time = " + time.Seconds);
+            //var end = DateTime.Now;
+            //var time = end - start;
+            //MessageBox.Show("Download complete, time = " + time.Seconds);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

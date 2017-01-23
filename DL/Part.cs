@@ -23,7 +23,10 @@ namespace DL
 
         public Part()
         {
-            _client = new HttpClient();
+            _client = new HttpClient()
+            {
+                Timeout = System.Threading.Timeout.InfiniteTimeSpan
+            };
             ((Progress<int>)_progress).ProgressChanged += _progress_ProgressChanged; ;
         }
 
@@ -65,6 +68,7 @@ namespace DL
             LocalPath = Path.Combine(Constants.Dir, name);
             var request = new HttpRequestMessage(HttpMethod.Get, File.Url);
             request.Headers.Range = new RangeHeaderValue(Start, End);
+            request.Headers.ConnectionClose = true;
             var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
             if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.PartialContent)
             {

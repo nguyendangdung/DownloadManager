@@ -14,27 +14,32 @@ namespace DL
 {
     public partial class Form1 : Form
     {
-        File file = new File()
-        {
-            Url = "http://dn3.freedownloadmanager.org/5/5.1-latest/fdm5_x64_setup.exe"
-        };
+        private File _file;
         public Form1()
         {
             InitializeComponent();
-            file.PropertyChanged += File_PropertyChanged;
+            _file = new File();
+            _file.PropertyChanged += File_PropertyChanged;
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            await file.RequestInfoAsync();
-            label2.Text = file.Size.ToString();
-            partBindingSource.DataSource = file.Parts;
-            await file.DownloadAsync();
+            label3.Text = DateTime.Now.ToLongTimeString();
+            await _file.RequestInfoAsync();
+            label2.Text = _file.Size.ToString();
+            partBindingSource.DataSource = _file.Parts;
+            await _file.DownloadAsync();
+            label3.Text += "    " + DateTime.Now.ToLongTimeString();
         }
 
         private void File_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            label1.Text = file.DownloadedSize.ToString();
+            label1.Text = _file.DownloadedSize.ToString();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            _file.Url = textBox1.Text;
         }
     }
 }
