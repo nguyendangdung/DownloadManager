@@ -35,7 +35,7 @@ namespace My_Download_Manager
                 
                 FileName = System.IO.Path.GetFileName(request.RequestUri.AbsolutePath);
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                if (FileName == null || FileName.Length == 0)
+                if (string.IsNullOrEmpty(FileName))
                     FileName = "Index.htm";
                 else
                 {
