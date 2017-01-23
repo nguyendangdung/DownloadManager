@@ -42,7 +42,7 @@ namespace My_Download_Manager
                 txtEdit.Width = lblFileName.Width;
                 txtEdit.Height = lblFileName.Height;
                 txtEdit.Text = lblFileName.Text;
-                txtEdit.LostFocus += new EventHandler(txtEdit_LostFocus);
+                txtEdit.LostFocus += txtEdit_LostFocus;
             }
             if (IsShow)
             {

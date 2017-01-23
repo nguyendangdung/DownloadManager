@@ -59,7 +59,7 @@ namespace My_Download_Manager
             WorkingHeight = rec.Height;
             lstcontrol = new List<ControlSniffFile>();
             TimerShowFile = new Timer();
-            TimerShowFile.Tick += new EventHandler(TimerShowFile_Tick);
+            TimerShowFile.Tick += TimerShowFile_Tick;
             TimerShowFile.Interval = 150;
             TimerShowFile.Enabled = true;
         }
@@ -113,7 +113,7 @@ namespace My_Download_Manager
         {
             if (InvokeRequired)
             {
-                SetTopHeightFromCallback obj = new SetTopHeightFromCallback(SetTopHeightFrom);
+                SetTopHeightFromCallback obj = SetTopHeightFrom;
                 Invoke(obj, top, height);
             }
             else
@@ -126,7 +126,7 @@ namespace My_Download_Manager
         {
             if (InvokeRequired)
             {
-                SetFormVisibleCalback obj = new SetFormVisibleCalback(SetFormVisible);
+                SetFormVisibleCalback obj = SetFormVisible;
                 Invoke(obj);
             }
             else
@@ -139,7 +139,7 @@ namespace My_Download_Manager
         {
             if (InvokeRequired)
             {
-                AddControlToFormCallback obj = new AddControlToFormCallback(AddControlToForm);
+                AddControlToFormCallback obj = AddControlToForm;
                 Invoke(obj, csf, IsAdd);
             }
             else
@@ -156,8 +156,8 @@ namespace My_Download_Manager
             SetFormVisible();
             ControlSniffFile csf = new ControlSniffFile(file.FileName, ObjStatic.ToStringSize(file.Size));
             csf.Tag = file;
-            csf.PerformDeleteFile += new ControlSniffFile.DeleteFile(csf_PerformDeleteFile);
-            csf.StartDownloadFile += new ControlSniffFile.FileDownload(csf_StartDownloadFile);
+            csf.PerformDeleteFile += csf_PerformDeleteFile;
+            csf.StartDownloadFile += csf_StartDownloadFile;
             lstcontrol.Insert(0, csf);
             AddControlToForm(csf, true);
             if (lstcontrol.Count > MaxElement)
@@ -229,7 +229,7 @@ namespace My_Download_Manager
         {
             if (csf.InvokeRequired)
             {
-                SetPositionControlSniffFileCallback obj = new SetPositionControlSniffFileCallback(SetPositionControlSniffFile);
+                SetPositionControlSniffFileCallback obj = SetPositionControlSniffFile;
                 csf.Invoke(obj, csf, top);
             }
             else csf.Top = top;
@@ -238,7 +238,7 @@ namespace My_Download_Manager
         {
             if (InvokeRequired)
             {
-                ClearControlCallback obj = new ClearControlCallback(ClearControl);
+                ClearControlCallback obj = ClearControl;
                 Invoke(obj);
             }
             else

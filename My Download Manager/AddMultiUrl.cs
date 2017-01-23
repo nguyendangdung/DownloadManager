@@ -47,7 +47,7 @@ namespace My_Download_Manager
                 LoadCategory();
                 ListExtension = new Hashtable();
                 Extensions = new List<string>();
-                System.Threading.ThreadStart tsgetsize = new System.Threading.ThreadStart(GetSizeFile);
+                System.Threading.ThreadStart tsgetsize = GetSizeFile;
                 threadGetSizeFile = new System.Threading.Thread(tsgetsize);
                 threadGetSizeFile.Start();
             }
@@ -102,7 +102,7 @@ namespace My_Download_Manager
         {
             if (FilterFlowLayout.InvokeRequired)
             {
-                AddControlToFlowLayoutCallback obj = new AddControlToFlowLayoutCallback(AddControlToFlowLayout);
+                AddControlToFlowLayoutCallback obj = AddControlToFlowLayout;
                 FilterFlowLayout.Invoke(obj, extension);
             }
             else
@@ -111,7 +111,7 @@ namespace My_Download_Manager
                 cbo.Text = extension;
                 cbo.Checked = true;
                 cbo.AutoSize = true;
-                cbo.CheckedChanged += new EventHandler(cbo_CheckedChanged);
+                cbo.CheckedChanged += cbo_CheckedChanged;
                 FilterFlowLayout.Controls.Add(cbo);
                 cbo.Show();
             }
@@ -143,7 +143,7 @@ namespace My_Download_Manager
         {
             if (GridLink.InvokeRequired)
             {
-                AddRowCallback obj = new AddRowCallback(AddRow);
+                AddRowCallback obj = AddRow;
                 GridLink.Invoke(obj, link);
             }
             else
@@ -289,7 +289,7 @@ namespace My_Download_Manager
         {
             if (GridLink.InvokeRequired)
             {
-                SetDataForCellCallBack obj = new SetDataForCellCallBack(SetDataForCell);
+                SetDataForCellCallBack obj = SetDataForCell;
                 GridLink.Invoke(obj, row, col, value);
             }
             else
@@ -333,7 +333,7 @@ namespace My_Download_Manager
             if (!IsCheckinglink)
             {
                 IsCheckinglink = true;
-                System.Threading.ThreadStart ts = new System.Threading.ThreadStart(StartCheckLink);
+                System.Threading.ThreadStart ts = StartCheckLink;
                 threadCheckSize = new System.Threading.Thread(ts);
                 threadCheckSize.Start();
                 btnCheckLink.Text = "Stop check link";
@@ -357,7 +357,7 @@ namespace My_Download_Manager
         {
             if (obj.InvokeRequired)
             {
-                SetTextControlCallback objcallback = new SetTextControlCallback(SetText);
+                SetTextControlCallback objcallback = SetText;
                 obj.Invoke(objcallback, obj, text);
             }
             else obj.Text = text;

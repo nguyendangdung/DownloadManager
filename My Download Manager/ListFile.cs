@@ -44,7 +44,7 @@ namespace My_Download_Manager
                     files[i].Running = false;
                     files[i].IsCancelDownload = false;
                 }
-                System.Threading.ThreadStart ts = new System.Threading.ThreadStart(PerformDownload);
+                System.Threading.ThreadStart ts = PerformDownload;
                 System.Threading.Thread t = new System.Threading.Thread(ts);
                 t.Start();
             }
@@ -117,7 +117,7 @@ namespace My_Download_Manager
                         }
                         if (CanShutdown)
                         {
-                            System.Threading.ThreadStart ts = new System.Threading.ThreadStart(ShowShutDown);
+                            System.Threading.ThreadStart ts = ShowShutDown;
                             System.Threading.Thread tshutdown = new System.Threading.Thread(ts);
                             tshutdown.Start();
                         }

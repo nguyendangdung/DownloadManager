@@ -31,7 +31,7 @@ namespace My_Download_Manager
         {
             if (GridFile.InvokeRequired)
             {
-                AddRowToGridCallBack obj = new AddRowToGridCallBack(AddRowToGrid);
+                AddRowToGridCallBack obj = AddRowToGrid;
                 GridFile.Invoke(obj, Checked, FileName, Size, Status, LinkMediaFire, Link);
             }
             else
@@ -51,7 +51,7 @@ namespace My_Download_Manager
         {
             if (GridFile.InvokeRequired)
             {
-                ClearGridCallBack obj = new ClearGridCallBack(ClearGrid);
+                ClearGridCallBack obj = ClearGrid;
                 GridFile.Invoke(obj);
             }
             else GridFile.Rows.Clear();
@@ -60,7 +60,7 @@ namespace My_Download_Manager
         {
             if (GridFile.InvokeRequired)
             {
-                DeleteRowCallBack obj = new DeleteRowCallBack(DeleteRow);
+                DeleteRowCallBack obj = DeleteRow;
                 GridFile.Invoke(obj, row);
             }
             else GridFile.Rows.Remove(row);
@@ -69,7 +69,7 @@ namespace My_Download_Manager
         {
             if (lbl.InvokeRequired)
             {
-                SetTextCallback obj = new SetTextCallback(SetText);
+                SetTextCallback obj = SetText;
                 lbl.Invoke(obj, lbl, text);
             }
             else
@@ -81,7 +81,7 @@ namespace My_Download_Manager
         {
             if (GridFile.InvokeRequired)
             {
-                SetDataForCellCallBack obj = new SetDataForCellCallBack(SetDataForCell);
+                SetDataForCellCallBack obj = SetDataForCell;
                 GridFile.Invoke(obj, row, col, value);
             }
             else
@@ -125,7 +125,7 @@ namespace My_Download_Manager
             if (!string.IsNullOrEmpty(data))
             {
                 Links = data.Split('\n', '\r', '\t');
-                System.Threading.ThreadStart ts = new System.Threading.ThreadStart(StartGetLink);
+                System.Threading.ThreadStart ts = StartGetLink;
                 threadgetlink = new System.Threading.Thread(ts);
                 threadgetlink.Start();
             }
@@ -221,7 +221,7 @@ namespace My_Download_Manager
         {
             if (!StopCheckLink())
                 return;
-            System.Threading.ThreadStart ts = new System.Threading.ThreadStart(StartCheckLink);
+            System.Threading.ThreadStart ts = StartCheckLink;
             threadchecklink = new System.Threading.Thread(ts);
             threadchecklink.Start();
         }
@@ -301,7 +301,7 @@ namespace My_Download_Manager
         {
             if (cboCategory.InvokeRequired)
             {
-                GetCurrentListFileCallBack obj = new GetCurrentListFileCallBack(GetCurrentListFile);
+                GetCurrentListFileCallBack obj = GetCurrentListFile;
                 return (ListFile)cboCategory.Invoke(obj);
             }
             return (ListFile)cboCategory.SelectedItem;

@@ -70,12 +70,12 @@ namespace My_Download_Manager
             if (!file.Running)
             {
                 file_CompleteDownload(null);
-                file.BeginDownload -= new File.EventStartDownload(file_BeginDownload);
-                file.BeginDownload += new File.EventStartDownload(file_BeginDownload);
+                file.BeginDownload -= file_BeginDownload;
+                file.BeginDownload += file_BeginDownload;
             }
             else file_BeginDownload(null);
-            file.CompleteDownload -= new File.EventDownloadComplete(file_CompleteDownload);
-            file.CompleteDownload += new File.EventDownloadComplete(file_CompleteDownload);
+            file.CompleteDownload -= file_CompleteDownload;
+            file.CompleteDownload += file_CompleteDownload;
         }
         private void file_CompleteDownload(object sender)
         {
@@ -101,7 +101,7 @@ namespace My_Download_Manager
         {
             ProcessStatusMultiPart.MaxValue = file.Size;
             ProcessStatusMultiPart.Parts = file.GetParts();
-            System.Threading.ThreadStart ts = new System.Threading.ThreadStart(ShowStatus);
+            System.Threading.ThreadStart ts = ShowStatus;
             TimerShowStatus = new System.Threading.Thread(ts);
             TimerShowStatus.Start();
         }
@@ -109,7 +109,7 @@ namespace My_Download_Manager
         {
             if (lbl.InvokeRequired)
             {
-                SetTextCallBack obj = new SetTextCallBack(SetText);
+                SetTextCallBack obj = SetText;
                 lbl.Invoke(obj, lbl, text);
             }
             else
@@ -121,7 +121,7 @@ namespace My_Download_Manager
         {
             if (ProcessStatus.InvokeRequired)
             {
-                SetProcessBarValueCallBack obj = new SetProcessBarValueCallBack(SetProcessBarValue);
+                SetProcessBarValueCallBack obj = SetProcessBarValue;
                 ProcessStatus.Invoke(obj, value, isValue);
             }
             else
@@ -189,7 +189,7 @@ namespace My_Download_Manager
         {
             if (ProcessStatusMultiPart.InvokeRequired)
             {
-                UpdateProcessMultiPartCallback obj = new UpdateProcessMultiPartCallback(UpdateProcessMultiPart);
+                UpdateProcessMultiPartCallback obj = UpdateProcessMultiPart;
                 ProcessStatusMultiPart.Invoke(obj);
             }
             else ProcessStatusMultiPart.UpdateValue();
