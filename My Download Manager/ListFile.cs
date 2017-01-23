@@ -11,7 +11,7 @@ namespace My_Download_Manager
         #region >- Variable -<
 
         private string name = string.Empty;
-        private List<FileDownload> files;
+        private List<File> files;
         private int fileconnection;
         private string saveto = string.Empty;
         private bool exitwindownwhencomplete = false;
@@ -27,7 +27,7 @@ namespace My_Download_Manager
             this.name = name;
             running = false;
             this.fileconnection = fileconnection;
-            files = new List<FileDownload>();
+            files = new List<File>();
         }
 
         #endregion
@@ -147,12 +147,12 @@ namespace My_Download_Manager
 
         #region >- Content ListFile -<
 
-        public void AddFile(FileDownload f)
+        public void AddFile(File f)
         {
             files.Add(f);
             f.Parent = this;
         }
-        public void InsertFile(int index,FileDownload f)
+        public void InsertFile(int index,File f)
         {
             files.Insert(index, f);
             f.Parent = this;
@@ -166,7 +166,7 @@ namespace My_Download_Manager
             files[index].Dispose();
             files.RemoveAt(index);
         }
-        public void RemoveFile(FileDownload f)
+        public void RemoveFile(File f)
         {
             f.Dispose();
             files.Remove(f);
@@ -203,7 +203,7 @@ namespace My_Download_Manager
                     fileconnection = value;
             }
         }
-        public FileDownload this[int index]
+        public File this[int index]
         {
             get
             {

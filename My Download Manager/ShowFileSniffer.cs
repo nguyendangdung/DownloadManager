@@ -215,7 +215,7 @@ namespace My_Download_Manager
                 }
                 if (!Iscancel)
                 {
-                    FileDownload fd = new FileDownload(txtpathfile, fs.Link, fs.Size, System.IO.Path.GetFileName(txtpathfile));
+                    File fd = new File(txtpathfile, fs.Link, fs.Size, System.IO.Path.GetFileName(txtpathfile));
                     ObjStatic.FormMain.AddFileToCurrentCategory(fd, true);
                     RemoveFile(control);
                 }
@@ -287,7 +287,7 @@ namespace My_Download_Manager
                         string pathfile = path + "\\" + fs.FileName;
                         if (!System.IO.File.Exists(pathfile))
                         {
-                            FileDownload fd = new FileDownload(pathfile, fs.Link, fs.Size, fs.FileName);
+                            File fd = new File(pathfile, fs.Link, fs.Size, fs.FileName);
                             ObjStatic.FormMain.AddFileToCurrentCategory(fd, true);
                             RemoveFile(lstcontrol[i]);
                         }

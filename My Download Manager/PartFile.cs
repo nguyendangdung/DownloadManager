@@ -13,7 +13,7 @@ namespace My_Download_Manager
         [field: NonSerialized()]
         public event EventPartDownloadComplete PartDownloadComplete;
         private long from;
-        private FileDownload parent;
+        private File parent;
         [field: NonSerialized()]
         public bool CanSplit = false;
         [field: NonSerialized()]
@@ -22,7 +22,7 @@ namespace My_Download_Manager
 
         #region >- Contructure PartFile -<
 
-        public PartFile(long from, long size, string pathfile, FileDownload parent)
+        public PartFile(long from, long size, string pathfile, File parent)
             : base(pathfile, size)
         {
             this.from = from;

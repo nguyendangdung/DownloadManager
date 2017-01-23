@@ -280,7 +280,7 @@ namespace My_Download_Manager
                     if (string.IsNullOrEmpty(linkdirect))
                         linkdirect = linkmediafire;
                     long size = Convert.ToInt32(row.Tag);
-                    FileDownload fd = new FileDownload(path + "\\" + filename, linkdirect, size, filename);
+                    File fd = new File(path + "\\" + filename, linkdirect, size, filename);
                     fd.IsMediafireLink = true;
                     fd.LinkMediaFire = linkmediafire;
                     if (iscurrent)

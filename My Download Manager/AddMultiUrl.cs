@@ -213,7 +213,7 @@ namespace My_Download_Manager
                         string filename = row.Cells[1].Value.ToString();
                         string link = row.Cells[3].Value.ToString();
                         size = Convert.ToInt32(row.Tag);
-                        FileDownload fd = new FileDownload(saveto + "\\" + filename, link, size, filename);
+                        File fd = new File(saveto + "\\" + filename, link, size, filename);
                         ObjStatic.FormMain.AddFileToCurrentCategory(fd);
                     }
                 }

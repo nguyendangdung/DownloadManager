@@ -12,7 +12,7 @@ namespace My_Download_Manager
     {
         #region >- Variable -<
 
-        private FileDownload file;
+        private File file;
         private delegate void SetTextCallBack(Label l, string Text);
         private delegate void SetProcessBarValueCallBack(long value, bool isValue);
         private delegate void UpdateProcessMultiPartCallback();
@@ -23,7 +23,7 @@ namespace My_Download_Manager
 
         #region >- Content -<
 
-        public FileProperties(FileDownload file)
+        public FileProperties(File file)
         {
             InitializeComponent();
             this.file = file;
@@ -70,12 +70,12 @@ namespace My_Download_Manager
             if (!file.Running)
             {
                 file_CompleteDownload(null);
-                file.BeginDownload -= new FileDownload.EventStartDownload(file_BeginDownload);
-                file.BeginDownload += new FileDownload.EventStartDownload(file_BeginDownload);
+                file.BeginDownload -= new File.EventStartDownload(file_BeginDownload);
+                file.BeginDownload += new File.EventStartDownload(file_BeginDownload);
             }
             else file_BeginDownload(null);
-            file.CompleteDownload -= new FileDownload.EventDownloadComplete(file_CompleteDownload);
-            file.CompleteDownload += new FileDownload.EventDownloadComplete(file_CompleteDownload);
+            file.CompleteDownload -= new File.EventDownloadComplete(file_CompleteDownload);
+            file.CompleteDownload += new File.EventDownloadComplete(file_CompleteDownload);
         }
         private void file_CompleteDownload(object sender)
         {

@@ -59,7 +59,7 @@ namespace My_Download_Manager
                     {
                         for (int i = 0; i < lf.Count; i++)
                         {
-                            FileDownload f = lf[i];
+                            File f = lf[i];
                             f.Loaded = 0;
                             f.Status = DownloadStatus.Create;
                             f.GetParts().Clear();
