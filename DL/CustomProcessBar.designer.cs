@@ -1,4 +1,4 @@
-namespace My_Download_Manager
+namespace DL
 {
     partial class CustomProcessBar
     {

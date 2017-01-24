@@ -12,10 +12,10 @@ using System.Windows.Forms;
 
 namespace DL
 {
-    public partial class Form1 : Form
+    public partial class Main : Form
     {
         private File _file;
-        public Form1()
+        public Main()
         {
             InitializeComponent();
             _file = new File();

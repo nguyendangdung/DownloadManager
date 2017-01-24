@@ -1,6 +1,6 @@
 ﻿namespace DL
 {
-    partial class Form1
+    partial class Main
     {
         /// <summary>
         /// Required designer variable.
@@ -42,8 +42,8 @@
             this.downloadedSizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.downloadedSizeMbDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.partBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.customProcessBar1 = new My_Download_Manager.CustomProcessBar();
-            this.customProcessBar2 = new My_Download_Manager.CustomProcessBar();
+            this.customProcessBar1 = new CustomProcessBar();
+            this.customProcessBar2 = new CustomProcessBar();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -214,8 +214,8 @@
         private System.Windows.Forms.BindingSource partBindingSource;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox1;
-        private My_Download_Manager.CustomProcessBar customProcessBar1;
-        private My_Download_Manager.CustomProcessBar customProcessBar2;
+        private CustomProcessBar customProcessBar1;
+        private CustomProcessBar customProcessBar2;
     }
 }
 

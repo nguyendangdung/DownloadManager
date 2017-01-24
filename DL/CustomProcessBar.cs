@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
-using DL;
 
-namespace My_Download_Manager
+namespace DL
 {
     public partial class CustomProcessBar : UserControl
     {
