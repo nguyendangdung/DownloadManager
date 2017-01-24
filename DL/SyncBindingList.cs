@@ -11,7 +11,7 @@ namespace DL
 {
     public class SyncBindingList<T> : BindingList<T>
     {
-        private SynchronizationContext _syncContext;
+        private readonly SynchronizationContext _syncContext;
         public SyncBindingList()
         {
             _syncContext = SynchronizationContext.Current;

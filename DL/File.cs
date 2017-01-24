@@ -15,7 +15,7 @@ namespace DL
     public class File : INotifyPropertyChanged
     {
         private DateTime? _time;
-        private HttpClient _client;
+        private readonly HttpClient _client;
         private long _downloadedSize;
 
         public File()

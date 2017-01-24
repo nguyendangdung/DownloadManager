@@ -14,7 +14,7 @@ namespace DL
 {
     public partial class Main : Form
     {
-        private File _file;
+        private readonly File _file;
         public Main()
         {
             InitializeComponent();

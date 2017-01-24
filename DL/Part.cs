@@ -12,12 +12,9 @@ namespace DL
 {
     public class Part : INotifyPropertyChanged
     {
-        private HttpClient _client;
+        private readonly HttpClient _client;
         private long _downloadedSize;
-        IProgress<int> _progress = new Progress<int>((t) =>
-        {
-            
-        });
+        readonly IProgress<int> _progress = new Progress<int>();
 
         private string _downloadedSizeMb;
 
