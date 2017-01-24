@@ -33,7 +33,6 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.customProcessBar2 = new DL.CustomProcessBar();
             this.customProcessBar1 = new DL.CustomProcessBar();
@@ -74,7 +73,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(12, 94);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(737, 82);
+            this.dataGridView1.Size = new System.Drawing.Size(737, 306);
             this.dataGridView1.TabIndex = 1;
             // 
             // label1
@@ -95,15 +94,6 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "label2";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 38);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "label3";
-            // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(12, 54);
@@ -116,7 +106,7 @@
             // 
             this.customProcessBar2.BackColor = System.Drawing.Color.Silver;
             this.customProcessBar2.Font = new System.Drawing.Font("Tahoma", 10F);
-            this.customProcessBar2.Location = new System.Drawing.Point(12, 218);
+            this.customProcessBar2.Location = new System.Drawing.Point(12, 452);
             this.customProcessBar2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.customProcessBar2.MaxValue = ((long)(100));
             this.customProcessBar2.Name = "customProcessBar2";
@@ -129,7 +119,7 @@
             // 
             this.customProcessBar1.BackColor = System.Drawing.Color.Silver;
             this.customProcessBar1.Font = new System.Drawing.Font("Tahoma", 10F);
-            this.customProcessBar1.Location = new System.Drawing.Point(12, 183);
+            this.customProcessBar1.Location = new System.Drawing.Point(12, 417);
             this.customProcessBar1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.customProcessBar1.MaxValue = ((long)(100));
             this.customProcessBar1.Name = "customProcessBar1";
@@ -185,7 +175,6 @@
             this.Controls.Add(this.customProcessBar2);
             this.Controls.Add(this.customProcessBar1);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);
@@ -212,7 +201,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn downloadedSizeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn downloadedSizeMbDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource partBindingSource;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox1;
         private CustomProcessBar customProcessBar1;
         private CustomProcessBar customProcessBar2;
