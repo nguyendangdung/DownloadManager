@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -37,9 +37,12 @@ namespace My_Download_Manager
 
         public override void StartDownload()
         {
+            // Nêu đang chạy thì bỏ qua
             if (!Running)
                 Running = true;
             else return;
+
+            // 
             Status = DownloadStatus.Downloading;
             System.Threading.ThreadStart ts = PerformStart;
             System.Threading.Thread threadDownload = new System.Threading.Thread(ts);
@@ -59,8 +62,7 @@ namespace My_Download_Manager
                 {
                     Status = DownloadStatus.Complete;
                     Running = false;
-                    if (PartDownloadComplete != null)
-                        PartDownloadComplete(this);
+                    PartDownloadComplete?.Invoke(this);
                     return;
                 }
             }
