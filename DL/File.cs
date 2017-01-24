@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace DL
 {
-    class File : INotifyPropertyChanged
+    public class File : INotifyPropertyChanged
     {
         private DateTime? _time;
         private HttpClient _client;

@@ -31,6 +31,10 @@
             this.components = new System.ComponentModel.Container();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.fileDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.startDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.endDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -38,10 +42,8 @@
             this.downloadedSizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.downloadedSizeMbDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.partBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.customProcessBar1 = new My_Download_Manager.CustomProcessBar();
+            this.customProcessBar2 = new My_Download_Manager.CustomProcessBar();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -70,8 +72,43 @@
             this.dataGridView1.DataSource = this.partBindingSource;
             this.dataGridView1.Location = new System.Drawing.Point(12, 94);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(737, 386);
+            this.dataGridView1.Size = new System.Drawing.Size(737, 82);
             this.dataGridView1.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(178, 12);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 12);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "label2";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 38);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "label3";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(12, 54);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(737, 20);
+            this.textBox1.TabIndex = 5;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // fileDataGridViewTextBoxColumn
             // 
@@ -114,46 +151,39 @@
             // 
             this.partBindingSource.DataSource = typeof(DL.Part);
             // 
-            // label1
+            // customProcessBar1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(178, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "label1";
+            this.customProcessBar1.BackColor = System.Drawing.Color.Silver;
+            this.customProcessBar1.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.customProcessBar1.Location = new System.Drawing.Point(12, 183);
+            this.customProcessBar1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.customProcessBar1.MaxValue = ((long)(100));
+            this.customProcessBar1.Name = "customProcessBar1";
+            this.customProcessBar1.Size = new System.Drawing.Size(737, 27);
+            this.customProcessBar1.TabIndex = 6;
+            this.customProcessBar1.Value = ((long)(0));
+            this.customProcessBar1.ValueColor = System.Drawing.Color.Blue;
             // 
-            // label2
+            // customProcessBar2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 12);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "label2";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 38);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "label3";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(12, 54);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(737, 20);
-            this.textBox1.TabIndex = 5;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.customProcessBar2.BackColor = System.Drawing.Color.Silver;
+            this.customProcessBar2.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.customProcessBar2.Location = new System.Drawing.Point(12, 218);
+            this.customProcessBar2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.customProcessBar2.MaxValue = ((long)(100));
+            this.customProcessBar2.Name = "customProcessBar2";
+            this.customProcessBar2.Size = new System.Drawing.Size(737, 27);
+            this.customProcessBar2.TabIndex = 7;
+            this.customProcessBar2.Value = ((long)(0));
+            this.customProcessBar2.ValueColor = System.Drawing.Color.Blue;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(761, 492);
+            this.Controls.Add(this.customProcessBar2);
+            this.Controls.Add(this.customProcessBar1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -184,6 +214,8 @@
         private System.Windows.Forms.BindingSource partBindingSource;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox1;
+        private My_Download_Manager.CustomProcessBar customProcessBar1;
+        private My_Download_Manager.CustomProcessBar customProcessBar2;
     }
 }
 

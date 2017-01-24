@@ -10,7 +10,7 @@ using ByteSizeLib;
 
 namespace DL
 {
-    class Part : INotifyPropertyChanged
+    public class Part : INotifyPropertyChanged
     {
         private HttpClient _client;
         private long _downloadedSize;

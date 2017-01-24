@@ -58,6 +58,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomProcessBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomProcessBar.designer.cs">
+      <DependentUpon>CustomProcessBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="SyncBindingList.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="File.cs" />
@@ -70,6 +76,10 @@
     <Compile Include="Part.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CustomProcessBar.resx">
+      <DependentUpon>CustomProcessBar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
