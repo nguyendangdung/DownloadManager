@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
@@ -24,10 +25,12 @@ namespace DL
 
         public File()
         {
+            
             _client = new HttpClient()
             {
                 Timeout = Timeout.InfiniteTimeSpan
             };
+            // _client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue());
             Name = "Test.exe";
             _log = new LoggerConfiguration()
                 .WriteTo.File($"{Name}.txt")
@@ -78,13 +81,13 @@ namespace DL
             {
                 var size = request.Content.Headers.ContentLength.GetValueOrDefault();
                 Size = size;
-                var num = 16;
+                var num = 15;
                 var partSize = size / num;
                 for (int i = 0; i < num; i++)
                 {
                     if (i != num - 1)
                     {
-                        var part = new Part(this)
+                        var part = new Part(this, _client)
                         {
                             Start = i * partSize,
                             End = (i + 1) * partSize - 1,
@@ -94,7 +97,7 @@ namespace DL
                     }
                     else
                     {
-                        var part = new Part(this)
+                        var part = new Part(this, _client)
                         {
                             Start = (num - 1) * partSize,
                             End = size - 1,

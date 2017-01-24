@@ -36,13 +36,14 @@ namespace DL
             }
         }
 
-        public Part(File file)
+        public Part(File file, HttpClient client)
         {
             File = file;
-            _client = new HttpClient()
-            {
-                Timeout = Timeout.InfiniteTimeSpan
-            };
+            _client = client;
+            //_client = new HttpClient()
+            //{
+            //    Timeout = Timeout.InfiniteTimeSpan
+            //};
             ((Progress<PartReport>)_progress).ProgressChanged += _progress_ProgressChanged;
             PartStatus = PartStatus.Created;
             Name = $"{File.Name}-{Guid.NewGuid()}";
@@ -81,51 +82,50 @@ namespace DL
 
         public async Task DownloadAsync()
         {
-            _log.Information("Starting download {Name} On ThreadId {ThreadId}", Name,
-                Thread.CurrentThread.ManagedThreadId);
-            if (_maxTry <= 0)
-            {
-                _progress.Report(new PartReport() {PartStatus = PartStatus.WaitAnother});
-                return;
-            }
-            _maxTry--;
-            
             LocalPath = Path.Combine(Constants.Dir, Name);
             var request = new HttpRequestMessage(HttpMethod.Get, File.Url);
             request.Headers.Range = new RangeHeaderValue(Start, End);
-            request.Headers.ConnectionClose = true;
-            var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
-            if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.PartialContent)
+            request.Headers.ConnectionClose = false;
+            while (_maxTry > 0)
             {
-                _log.Information("Got OK Status Code, begin streaming file to the local");
-                var report = 0;
-                int bufferSize = 4096;
-                using (var des = System.IO.File.OpenWrite(LocalPath))
-                using (var src = await response.Content.ReadAsStreamAsync())
+                _log.Information("Starting download {Name} On ThreadId {ThreadId}", Name,
+                    Thread.CurrentThread.ManagedThreadId);
+                _maxTry--;
+                var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+                if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.PartialContent)
                 {
-                    int count;
-                    byte[] buffer = new byte[bufferSize];
-
-                    while ((count = src.Read(buffer, 0, bufferSize)) != 0)
+                    _log.Information("Got OK Status Code, begin streaming file to the local");
+                    var report = 0;
+                    int bufferSize = 4096;
+                    using (var des = System.IO.File.OpenWrite(LocalPath))
+                    using (var src = await response.Content.ReadAsStreamAsync())
                     {
-                        report += count;
-                        if (report >= 102400)
+                        int count;
+                        byte[] buffer = new byte[bufferSize];
+
+                        while ((count = src.Read(buffer, 0, bufferSize)) != 0)
                         {
-                            _progress.Report(new PartReport() {Count = report});
-                            report = 0;
+                            report += count;
+                            if (report >= 102400)
+                            {
+                                _progress.Report(new PartReport() {Count = report});
+                                report = 0;
+                            }
+                            des.Write(buffer, 0, count);
                         }
-                        des.Write(buffer, 0, count);
+                        _progress.Report(new PartReport() {Count = report, PartStatus = PartStatus.Completed});
+                        _log.Information("Completed to download the PartFile");
+                        return;
                     }
-                    _progress.Report(new PartReport() { Count = report, PartStatus = PartStatus.Completed });
-                    _log.Information("Completed to download the PartFile");
                 }
+
+                var content = await response.Content.ReadAsStringAsync();
+                _log.Error(new Exception(content), "Get error response from Server, Wait 1s");
+                //await Task.Delay(1000);
+                Thread.Sleep(1000);
             }
-            else
-            {
-                _log.Information("Get error response from Server, Wait 1s");
-                await Task.Delay(5000);
-                await DownloadAsync();
-            }
+            _progress.Report(new PartReport() {PartStatus = PartStatus.WaitAnother});
+            _log.Information("Get error response from Server, Wait another");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
