@@ -30,6 +30,10 @@ namespace DL
             partBindingSource.DataSource = _file.Parts;
             customProcessBar1.MaxValue = _file.Size;
             customProcessBar1.Parts = _file.Parts.ToList();
+
+            customProcessBar2.MaxValue = _file.Size;
+            customProcessBar2.Value = _file.DownloadedSize;
+            
             await _file.DownloadAsync();
             label3.Text += "    " + DateTime.Now.ToLongTimeString();
         }
@@ -37,7 +41,9 @@ namespace DL
         private void File_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             label1.Text = _file.DownloadedSize.ToString();
+            customProcessBar2.Value = _file.DownloadedSize;
             customProcessBar1.UpdateValue();
+            // customProcessBar2.UpdateValue();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

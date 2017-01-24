@@ -82,14 +82,18 @@ namespace DL
 
                     while ((count = src.Read(buffer, 0, bufferSize)) != 0)
                     {
-                        //report += count;
-                        //if (report >= 10485)
-                        //{
-                        //    report = 0;
-                        //    _progress.Report(count);
-                        //}
+                        report += count;
+                        if (report >= 102400)
+                        {
+                            report = 0;
+                            _progress.Report(count);
+                        }
                         _progress.Report(count);
                         des.Write(buffer, 0, count);
+                    }
+                    if (report > 0)
+                    {
+                        _progress.Report(count);
                     }
                 }
             }
