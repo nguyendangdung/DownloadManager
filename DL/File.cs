@@ -7,24 +7,31 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Serilog;
+using Serilog.Core;
 
 namespace DL
 {
     public class File : INotifyPropertyChanged
     {
-        private DateTime? _time;
+        private readonly Logger _log;
         private readonly HttpClient _client;
         private long _downloadedSize;
+        //private int _avaiableConnectionNumber;
 
         public File()
         {
             _client = new HttpClient()
             {
-                Timeout = System.Threading.Timeout.InfiniteTimeSpan
+                Timeout = Timeout.InfiniteTimeSpan
             };
             Name = "Test.exe";
+            _log = new LoggerConfiguration()
+                .WriteTo.File($"{Name}.txt")
+                .CreateLogger();
         }
 
         ////public long DownloadedSize { get; set; }
@@ -41,86 +48,135 @@ namespace DL
             get { return _downloadedSize; }
             set
             {
-                if (_time == null)
-                {
-                    _time = DateTime.Now;
-                    _downloadedSize = value;
-                    OnPropertyChanged();
-                }
-                else
-                {
-                    var currentTime = DateTime.Now;
-                    var deltaTime = currentTime - _time.Value;
-                    var deltaSize = value - _downloadedSize;
-                    _downloadedSize = value;
-                    OnPropertyChanged();
+                _downloadedSize = value;
+                OnPropertyChanged();
+                //if (_time == null)
+                //{
+                //    _time = DateTime.Now;
+                //    _downloadedSize = value;
+                //    OnPropertyChanged();
+                //}
+                //else
+                //{
+                //    //var currentTime = DateTime.Now;
+                //    //var deltaTime = currentTime - _time.Value;
+                //    //var deltaSize = value - _downloadedSize;
+                //    _downloadedSize = value;
+                //    OnPropertyChanged();
 
-                    //var velocity = deltaSize/deltaTime.Seconds;
-                }
+                //    //var velocity = deltaSize/deltaTime.Seconds;
+                //}
             }
         }
 
         public async Task RequestInfoAsync()
         {
+            _log.Information("Start request file info {Url}, THreadId {threadid}", Url,
+                Thread.CurrentThread.ManagedThreadId);
             var request = await _client.GetAsync(Url, HttpCompletionOption.ResponseHeadersRead);
             if (request.StatusCode == HttpStatusCode.OK)
             {
                 var size = request.Content.Headers.ContentLength.GetValueOrDefault();
                 Size = size;
-                var partSize = size / 13;
-                for (int i = 0; i < 13; i++)
+                var num = 16;
+                var partSize = size / num;
+                for (int i = 0; i < num; i++)
                 {
-                    if (i != 12)
+                    if (i != num - 1)
                     {
-                        var part = new Part()
+                        var part = new Part(this)
                         {
                             Start = i * partSize,
                             End = (i + 1) * partSize - 1,
-                            File = this
+                            //File = this
                         };
                         Parts.Add(part);
                     }
                     else
                     {
-                        var part = new Part()
+                        var part = new Part(this)
                         {
-                            Start = 12 * partSize,
+                            Start = (num - 1) * partSize,
                             End = size - 1,
-                            File = this
+                            //File = this
                         };
                         Parts.Add(part);
                     }
                 }
+
+                _log.Information("Request Info done size = {size}, num = {num}", Size, num);
             }
         }
 
         public async Task DownloadAsync()
         {
-            //var start = DateTime.Now;
-            var tasks = new List<Task>();
-            foreach (var part in Parts)
+            _log.Information("Start download {Name} on Thread {Thread}", Name, Thread.CurrentThread.ManagedThreadId);
+            try
             {
-                var task = Task.Run(part.DownloadAsync);
-                tasks.Add(task);
-            }
-            await Task.WhenAll(tasks.ToArray());
-
-            var path = Path.Combine(Constants.Dir, Name);
-            using (var des = System.IO.File.Create(path))
-            {
+                var tasks = new List<Task>();
                 foreach (var part in Parts)
                 {
-                    using (var sor = System.IO.File.OpenRead(part.LocalPath))
-                    {
-                        await sor.CopyToAsync(des);
-                    }
-                    System.IO.File.Delete(part.LocalPath);
+                    var task = Task.Run(part.DownloadAsync);
+                    tasks.Add(task);
                 }
+                await Task.WhenAll(tasks.ToArray());
+                var waitParts = Parts.Where(s => s.PartStatus == PartStatus.WaitAnother);
+                var tasks2 = new List<Task>();
+
+                foreach (var part in waitParts)
+                {
+                    var task = Task.Run(part.DownloadAsync);
+                    tasks2.Add(task);
+                }
+                await Task.WhenAll(tasks2.ToArray());
             }
-            //var end = DateTime.Now;
-            //var time = end - start;
-            //MessageBox.Show("Download complete, time = " + time.Seconds);
+
+
+            catch (Exception ex)
+            {
+                _log.Error(ex, "Download Error");
+                MessageBox.Show("Download error");
+                return;
+            }
+
+            try
+            {
+                _log.Information("Start joining parts");
+                var path = Path.Combine(Constants.Dir, Name);
+                using (var des = System.IO.File.Create(path))
+                {
+                    foreach (var part in Parts)
+                    {
+                        using (var sor = System.IO.File.OpenRead(part.LocalPath))
+                        {
+                            await sor.CopyToAsync(des);
+                        }
+                        System.IO.File.Delete(part.LocalPath);
+                    }
+                }
+                _log.Information("Join done");
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex, "join error");
+                // throw;
+                MessageBox.Show("Join error");
+            }
+            
         }
+
+        //public int AvaiableConnectionNumber
+        //{
+        //    get { return _avaiableConnectionNumber; }
+        //    set
+        //    {
+        //        lock (this)
+        //        {
+        //            _avaiableConnectionNumber = value;
+        //        }
+                
+        //    }
+        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
 

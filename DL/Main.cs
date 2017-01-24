@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -24,9 +25,10 @@ namespace DL
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            label3.Text = DateTime.Now.ToLongTimeString();
+            this.Text = Thread.CurrentThread.ManagedThreadId.ToString();
+            //label3.Text = DateTime.Now.ToLongTimeString();
             await _file.RequestInfoAsync();
-            label2.Text = _file.Size.ToString();
+            //label2.Text = _file.Size.ToString();
             partBindingSource.DataSource = _file.Parts;
             customProcessBar1.MaxValue = _file.Size;
             customProcessBar1.Parts = _file.Parts.ToList();
@@ -35,7 +37,7 @@ namespace DL
             customProcessBar2.Value = _file.DownloadedSize;
             
             await _file.DownloadAsync();
-            label3.Text += "    " + DateTime.Now.ToLongTimeString();
+            //label3.Text += "    " + DateTime.Now.ToLongTimeString();
         }
 
         private void File_PropertyChanged(object sender, PropertyChangedEventArgs e)
