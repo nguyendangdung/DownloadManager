@@ -92,8 +92,7 @@ namespace My_Download_Manager
                     parent.FileNotFound = true;
                     TotalError = ObjStatic.MaxTryConnect + 1;
                     Running = false;
-                    if (PartDownloadComplete != null)
-                        PartDownloadComplete(this);
+                    PartDownloadComplete?.Invoke(this);
                     return;
                 }
                 requestlength = Convert.ToInt64(response.Headers[System.Net.HttpResponseHeader.ContentLength]);
